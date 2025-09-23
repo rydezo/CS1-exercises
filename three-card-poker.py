@@ -52,3 +52,50 @@ def sort_hand(hand: list[int]) -> list[int]:
 assert_equal(sort_hand([2, 4, 3]), [4, 3, 2])
 assert_equal(sort_hand([12, 6, 3]), [12, 6, 3])
 assert_equal(sort_hand([7, 8, 9]), [9, 8, 7])
+
+def has_triple(hand: list[int]) -> bool:
+    """
+    Determines if the hand has three identical numbers.
+    
+    Args:
+        hand (list[int]): The hand of cards
+    Returns:
+        bool: Whether the hand has three identical numbers
+    """
+    return hand[0] == hand[1] == hand[2]
+
+assert_equal(has_triple([2, 3, 4]), False)
+assert_equal(has_triple([3, 3, 3]), True)
+assert_equal(has_triple([7, 7, 7]), True)
+
+def has_straight(hand: list[int]) -> bool:
+    '''
+    Determines if the hand has three numbers in direct, 
+    consecutive order from largest to smallest
+    
+    Args:
+        hand (list[int]): The hand of cards sorted from largest to smallest
+    Returns:
+        bool: Whether the hand of cards is in direct, 
+        consecutive order from largest to smallest
+    '''
+    return hand[0] == hand[1] + 1 == hand[2] + 2
+
+assert_equal(has_straight([4, 3, 2]), True)
+assert_equal(has_straight([2, 3, 4]), False)
+assert_equal(has_straight([5, 3, 2]), False)
+
+def has_pair(hand: list[int]) -> bool:
+    '''
+    Determines if the hand has two identical numbers (a "pair")
+    
+    Args:
+        hand (list[int]): The hand of sorted cards
+    Returns:
+        bool: Whether the hand has a pair
+    '''
+    return len(set(hand)) < 3
+
+assert_equal(has_pair([4, 3, 2]), False)
+assert_equal(has_pair([5, 3, 3]), True)
+assert_equal(has_pair([7, 7, 10]), True)
