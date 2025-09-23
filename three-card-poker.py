@@ -99,3 +99,33 @@ def has_pair(hand: list[int]) -> bool:
 assert_equal(has_pair([4, 3, 2]), False)
 assert_equal(has_pair([5, 3, 3]), True)
 assert_equal(has_pair([7, 7, 10]), True)
+
+def score_hand(hand: list[int]) -> int:
+    '''
+    Scores a sorted hand of cards according to scoring guidelines.
+    
+    Args:
+        hand (list[int]): Sorted hand of cards
+    Returns:
+        int: Numerical score of the hand of cards
+    '''
+    score = 0
+    # score feature functions
+    if has_triple(hand):
+        score += 16 ** 4
+    elif has_straight(hand):
+        score += 15 * (16 ** 3)
+    elif has_pair(hand):
+        repeated_num = hand[0] if hand[0] == hand[1] else hand[2]
+        score += repeated_num * (16 ** 3)
+    
+    for i in range(3):
+        score += hand[i] * (16 ** (2-i))
+    
+    return score
+
+assert_equal(score_hand([7, 4, 4]), 18244)
+assert_equal(score_hand([3, 3, 2]), 13106)
+assert_equal(score_hand([11, 10, 9]), 64425)
+assert_equal(score_hand([3, 3, 3]), 66355)
+assert_equal(score_hand([5, 3, 2]), 1330)
