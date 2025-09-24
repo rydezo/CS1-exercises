@@ -129,3 +129,18 @@ assert_equal(score_hand([3, 3, 2]), 13106)
 assert_equal(score_hand([11, 10, 9]), 64425)
 assert_equal(score_hand([3, 3, 3]), 66355)
 assert_equal(score_hand([5, 3, 2]), 1330)
+
+def dealer_plays(hand: list[int]) -> bool:
+    '''
+    Determines whether the hand has a queen high or better
+    
+    Args:
+        hand (list[int]): Hand of cards
+    Returns:
+        bool: Whether the hand has a queen high or better
+    '''
+    return has_pair(hand) or has_triple(hand) or has_straight(hand) or hand[0] >= 12
+
+assert_equal(dealer_plays([4, 3, 2]), True)
+assert_equal(dealer_plays([12, 7, 2]), True)
+assert_equal(dealer_plays([9, 8, 6]), False)
