@@ -145,7 +145,6 @@ assert_equal(dealer_plays([4, 3, 2]), True)
 assert_equal(dealer_plays([12, 7, 2]), True)
 assert_equal(dealer_plays([9, 8, 6]), False)
 
-from poker import deal,get_choice
 def play_round() -> int:
     player_cards = sort_hand(deal())
     print("Your hand is:", hand_to_string(player_cards))
@@ -161,3 +160,26 @@ def play_round() -> int:
             return 10
         else:
             return 20 if player_score >= dealer_score else -20
+
+def get_choice() -> str:
+    """
+    Get user input and return either 'p' or 'f' depending on the player's choice.
+    """
+    answer= ' '
+    while answer not in 'pf':
+        answer=input("Please enter either 'p' or 'f':")
+    return answer
+
+from random import randint
+
+def deal() -> list[int]:
+    """
+    Simple random card dealing function that returns three randomly chosen cards,
+    represented as integers between 2 and 14.
+    """
+    return [randint(2, 14), randint(2, 14), randint(2, 14)]
+
+score = 0
+while True:
+    score += play_round()
+    print("Your score is", score, "- Starting a new round!")
