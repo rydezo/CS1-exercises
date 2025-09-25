@@ -146,6 +146,12 @@ assert_equal(dealer_plays([12, 7, 2]), True)
 assert_equal(dealer_plays([9, 8, 6]), False)
 
 def play_round() -> int:
+    '''
+    Plays a single round of three-card poker.
+    
+    Returns:
+        int: The score change from the round
+    '''
     player_cards = sort_hand(deal())
     print("Your hand is:", hand_to_string(player_cards))
     player_score = score_hand(player_cards)
