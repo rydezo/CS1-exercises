@@ -144,3 +144,20 @@ def dealer_plays(hand: list[int]) -> bool:
 assert_equal(dealer_plays([4, 3, 2]), True)
 assert_equal(dealer_plays([12, 7, 2]), True)
 assert_equal(dealer_plays([9, 8, 6]), False)
+
+from poker import deal,get_choice
+def play_round() -> int:
+    player_cards = sort_hand(deal())
+    print("Your hand is:", hand_to_string(player_cards))
+    player_score = score_hand(player_cards)
+    player_choice = get_choice()
+    if player_choice == "f":
+        return -10
+    else:
+        dealer_cards = sort_hand(deal())
+        print("Dealer's hand is:", hand_to_string(dealer_cards))
+        dealer_score = score_hand(dealer_cards)
+        if not dealer_plays(dealer_cards):
+            return 10
+        else:
+            return 20 if player_score >= dealer_score else -20
