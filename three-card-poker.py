@@ -183,3 +183,72 @@ score = 0
 while True:
     score += play_round()
     print("Your score is", score, "- Starting a new round!")
+
+from drafter import *
+from dataclasses import dataclass
+
+@dataclass
+class State:
+    hand: list[int]
+    dealer_hand: list[int]
+    score: int
+
+
+def decide_game(state: State) -> str:
+    if not dealer_plays(state.dealer_hand):
+        state.score += 10
+        dealer_action = "folded"
+    if score_hand(sort_hand(state.dealer_hand)) < score_hand(sort_hand(state.hand)):
+        state.score += 20
+        dealer_action = "won"
+    else:
+        state.score += -20
+        dealer_action = "lost"
+    return dealer_action
+
+
+@route
+def index(state: State):
+    state.hand = deal()
+    state.dealer_hand = deal()
+    return Page(
+        state,
+        [
+            Header("New round!"),
+            "Your score: " + str(state.score),
+            "Your hand: " + hand_to_string(state.hand),
+            Button("Fold", fold),
+            Button("Play", play),
+        ],
+    )
+
+
+@route
+def fold(state: State):
+    state.score -= 10
+    return Page(
+        state,
+        [
+            Header("You folded!"),
+            "You lost 10 points. Your score is now " + str(state.score),
+            Button("Start new game", index),
+        ],
+    )
+
+
+@route
+def play(state: State):
+    dealer_action = decide_game(state)
+    return Page(
+        state,
+        [
+            Header("Dealer " + dealer_action + "!"),
+            "Your hand: " + hand_to_string(state.hand),
+            "The dealer's hand: " + hand_to_string(state.dealer_hand),
+            "The dealer " + dealer_action + " and your score is now " + str(state.score) + " points.",
+            Button("Start new game", index),
+        ],
+    )
+
+
+start_server(State([], [], 0))
