@@ -190,6 +190,10 @@ while True:
     score += play_round()
     print("Your score is", score, "- Starting a new round!")
 
+    play_again = input("Do you want to keep playing? (y/n): ").lower()
+    if play_again != "y":
+        break
+
 from drafter import *
 from dataclasses import dataclass
 
@@ -204,14 +208,13 @@ def decide_game(state: State) -> str:
     if not dealer_plays(state.dealer_hand):
         state.score += 10
         dealer_action = "folded"
-    if score_hand(sort_hand(state.dealer_hand)) < score_hand(sort_hand(state.hand)):
+    elif score_hand(sort_hand(state.dealer_hand)) < score_hand(sort_hand(state.hand)):
         state.score += 20
         dealer_action = "won"
     else:
-        state.score += -20
+        state.score -= 20
         dealer_action = "lost"
     return dealer_action
-
 
 @route
 def index(state: State):
