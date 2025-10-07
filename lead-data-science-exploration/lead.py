@@ -9,7 +9,6 @@ Updated: September 12, 2023
 Data Provided by: Department of Education
 """
 
-# ppb = parts per billion; unit to measure lead concentration in water
 de_school_lead_samples = [
     '0002ppb| Appoquinimink|               Alfred G Waters Middle School|Kitchen Faucet',
     '0002ppb| Appoquinimink|               Alfred G Waters Middle School|Water Bottle Filler Cafeteria',
