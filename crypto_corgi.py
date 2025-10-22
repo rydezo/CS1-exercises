@@ -29,18 +29,14 @@ def encrypt_text(message: str, rotation_amount: int) -> str:
     Returns:
         str: Encrypted text according to the rotation amount
     """
-    ASCII_strings: list[int] = []
-    for char in message:
-        ASCII_strings.append(ord(char))
-    rotated = rotate_values(ASCII_strings, rotation_amount)
+    ords = [ord(char) for char in message]
+    rotated = rotate_values(ords, rotation_amount)
     updated: list[int] = []
     for value in rotated:
         updated.append(value)
         if value < 48:
             updated.append(126)
-    result: list[int] = []
-    for num in updated:
-        result.append(chr(num))
+    result = [chr(o) for o in updated]
     return "".join(result)
 
 def decrypt_text(message: str, rotation_amount: int) -> str:
@@ -53,17 +49,13 @@ def decrypt_text(message: str, rotation_amount: int) -> str:
     Returns:
         str: Decrypted text according to the rotation amount
     """
-    ASCII_strings: list[int] = []
-    for char in message:
-        ASCII_strings.append(ord(char))
+    ords = [ord(char) for char in message]
     no_tildes: list[str] = []
-    for value in ASCII_strings:
+    for value in ords:
         if value != 126:
             no_tildes.append(value)
     rotated = rotate_values(no_tildes, -rotation_amount)
-    result: list[int] = []
-    for num in rotated:
-        result.append(chr(num))
+    result = [chr(o) for o in rotated]
     return "".join(result)
     
 assert_equal(encrypt_text("hello", 1), "ifmmp")
