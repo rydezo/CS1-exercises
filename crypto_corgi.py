@@ -50,16 +50,15 @@ def decrypt_text(message: str, rotation_amount: int) -> str:
         str: Decrypted text according to the rotation amount
     """
     ords = [ord(char) for char in message]
-    no_tildes: list[str] = []
-    for value in ords:
-        if value != 126:
-            no_tildes.append(value)
+    no_tildes = [value for value in ords if value != 126]
     rotated = rotate_values(no_tildes, -rotation_amount)
     result = [chr(o) for o in rotated]
     return "".join(result)
     
 assert_equal(encrypt_text("hello", 1), "ifmmp")
+assert_equal(encrypt_text("", 10), "")
 assert_equal(encrypt_text("text!here", -1), "sdws ~gdqd")
 
 assert_equal(decrypt_text("ifmmp", 1), "hello")
+assert_equal(decrypt_text("", 5), "")
 assert_equal(decrypt_text("sdws ~gdqd", -1), "text!here")
