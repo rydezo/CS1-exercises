@@ -62,3 +62,26 @@ assert_equal(encrypt_text("text!here", -1), "sdws ~gdqd")
 assert_equal(decrypt_text("ifmmp", 1), "hello")
 assert_equal(decrypt_text("", 5), "")
 assert_equal(decrypt_text("sdws ~gdqd", -1), "text!here")
+
+from bakery import assert_equal
+
+# 3) Define hash_text
+def hash_text(message: str, base: int, hash_size: int) -> int:
+    """
+    Uniquely hashes a text message into an integer value.
+    
+    Args:
+        message(str): The text message to be hashed.
+        base(int): The base value for the hashing formula.
+        hash_size(int): The size of the hash table.
+    Returns:
+        int: The hashed integer value of the message.
+    """
+    hashed_values = []
+    for i, c in enumerate(message):
+        hashed_values.append((i + base) ** (ord(c)))
+    return sum(hashed_values) % hash_size
+
+assert_equal(hash_text("A", 11, 100), 51)
+assert_equal(hash_text("AB", 11, 100), 35)
+assert_equal(hash_text("ABC", 11, 100), 52)
